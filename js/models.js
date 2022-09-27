@@ -74,12 +74,8 @@ class StoryList {
 
   async addStory(user, newStory) {
     var data = JSON.stringify({
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNhbHZpbmNhcnRlciIsImlhdCI6MTY2NDAzOTAyM30.6aXn-Hnd5muzYEdbOfFaX5qCM_F8NSOzvkmUKXBuMYM",
-      "story": {
-        "author": "Matt Lane",
-        "title": "The best story ever",
-        "url": "http://google.com"
-      }
+      "token": user.loginToken,
+      "story": newStory,
     });
 
     var config = {
@@ -91,13 +87,8 @@ class StoryList {
       data: data
     };
 
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    const response = await axios(config);
+    return response.data;
 
   }
 }

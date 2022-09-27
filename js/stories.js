@@ -52,10 +52,35 @@ function putStoriesOnPage() {
 
 }
 
-async function createStory() {
+// http://curric.rithmschool.com/springboard/exercises/hack-or-snooze-ajax-api/
+// https://hackorsnoozev3.docs.apiary.io/#introduction/authentication
+async function createStory(event) {
 
-  let newStory = await storyList.addStory(currentUser,
-    {title: "Test", author: "Me", url: "http://meow.com"});
+  event.preventDefault();
 
+  const titleInput = document.getElementById('title');
+  const authorInput = document.getElementById('author');
+  const URLInput = document.getElementById('story-link');
+
+  console.log(titleInput.value);
+  console.log(authorInput.value);
+  console.log(URLInput.value);
+
+  const userInputStory = {
+    "author": authorInput.value,
+    "title": titleInput.value,
+    "url": URLInput.value
+  };
+
+  let newStory = await storyList.addStory(currentUser, userInputStory);
+  console.log(newStory);
+
+  // Update story list
+  // Update current ownStories
 
 }
+
+
+const createStoryForm = document.getElementById('createStoryForm');
+createStoryForm.addEventListener('submit', createStory);
+
