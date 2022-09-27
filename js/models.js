@@ -29,7 +29,6 @@ class Story {
   }
 }
 
-
 /******************************************************************************
  * List of Story instances: used by UI to show story lists in DOM.
  */
@@ -73,8 +72,33 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
-    // UNIMPLEMENTED: complete this function!
+  async addStory(user, newStory) {
+    var data = JSON.stringify({
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNhbHZpbmNhcnRlciIsImlhdCI6MTY2NDAzOTAyM30.6aXn-Hnd5muzYEdbOfFaX5qCM_F8NSOzvkmUKXBuMYM",
+      "story": {
+        "author": "Matt Lane",
+        "title": "The best story ever",
+        "url": "http://google.com"
+      }
+    });
+
+    var config = {
+      method: 'post',
+      url: 'https://hack-or-snooze-v3.herokuapp.com/stories',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: data
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
   }
 }
 
@@ -90,13 +114,13 @@ class User {
    */
 
   constructor({
-                username,
-                name,
-                createdAt,
-                favorites = [],
-                ownStories = []
-              },
-              token) {
+    username,
+    name,
+    createdAt,
+    favorites = [],
+    ownStories = []
+  },
+    token) {
     this.username = username;
     this.name = name;
     this.createdAt = createdAt;

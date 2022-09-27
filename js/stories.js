@@ -49,4 +49,13 @@ function putStoriesOnPage() {
   }
 
   $allStoriesList.show();
+
+}
+
+async function createStory() {
+
+  let newStory = await storyList.addStory(currentUser,
+    {title: "Test", author: "Me", url: "http://meow.com"});
+
+
 }
