@@ -114,3 +114,28 @@ function updateUIOnUserLogin() {
 
   updateNavOnLogin();
 }
+
+async function submitFavorite() {
+
+  const storyId = "078a5666-39c0-48f3-8a81-3bbd0f521d9e" // TODO read the DOM and find storyID
+  let methodType = ""
+
+  const found = currentUser.favorites.find(favorite => favorite.storyId === storyId);
+
+  if(found) {
+    methodType = "post"
+  } else {
+    methodType = "delete"
+  }
+
+  /*
+
+    if storyId doesn't exist in favorites array then we are trying to add it to favorites
+      - We should do a POST
+    else
+    if storyId exist in favorites array then we are trying to delete it from favorites
+      - We should do a DELETE
+
+  */
+  const favoriteResponse = await User.favoriteStory(currentUser, storyId, methodType);
+}

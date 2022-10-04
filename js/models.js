@@ -208,4 +208,22 @@ class User {
       return null;
     }
   }
+
+  static async favoriteStory(user, storyId, methodType) {
+    var data = JSON.stringify({
+      "token": user.loginToken
+    });
+
+    var config = {
+      method: methodType,
+      url: `https://hack-or-snooze-v3.herokuapp.com/users/${user.username}/favorites/${storyId}`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+
+    const response = await axios(config);
+    return response.data;
+  }
 }
