@@ -34,3 +34,20 @@ function updateNavOnLogin() {
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
 }
+
+function navFavoritesClick(evt) {
+  console.debug("navFavoritesClick");
+
+  $allStoriesList.empty();
+
+  // loop through all of our favorite stories and generate HTML for them
+   for (let story of currentUser.favorites) {
+    const $story = generateStoryMarkup(story);
+    $allStoriesList.append($story);
+  }
+
+  $allStoriesList.show();
+
+}
+
+$navFavorites.on("click", navFavoritesClick);

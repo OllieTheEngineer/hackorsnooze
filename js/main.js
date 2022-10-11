@@ -2,6 +2,10 @@
 
 // So we don't have to keep re-finding things on page, find DOM elements once:
 
+const favoriteStar = "https://toppng.com/uploads/preview/free-png-grey-star-png-images-transparent-grey-star-icon-11562980999ctbeqsdgmf.png";
+
+const unFavoriteStar = "https://as2.ftcdn.net/v2/jpg/02/19/11/75/1000_F_219117505_BapGXXD1yqEnfTQz9mhoi4TEohZrijej.jpg";
+
 const $body = $("body");
 
 const $storiesLoadingMsg = $("#stories-loading-msg");
@@ -11,6 +15,8 @@ const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
 
 const $navLogin = $("#nav-login");
+const $navFavorites = $("#nav-favorites");
+const $navStories = $("#nav-stories");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
 

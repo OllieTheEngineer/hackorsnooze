@@ -226,4 +226,22 @@ class User {
     const response = await axios(config);
     return response.data;
   }
+
+  static async deleteUserStory(user, storyId) {
+    var data = JSON.stringify({
+      "token":user.loginToken
+    });
+
+    var config = {
+      method: 'delete',
+      url: `https://hack-or-snooze-v3.herokuapp.com/stories/${storyId}`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+
+    const response = await axios(config);
+    return response.data;
+  }
 }

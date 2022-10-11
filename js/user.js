@@ -115,17 +115,18 @@ function updateUIOnUserLogin() {
   updateNavOnLogin();
 }
 
-async function submitFavorite() {
+async function submitFavorite(evt) {
 
-  const storyId = "078a5666-39c0-48f3-8a81-3bbd0f521d9e" // TODO read the DOM and find storyID
+  const storyId = evt.target.id;
+
   let methodType = ""
 
   const found = currentUser.favorites.find(favorite => favorite.storyId === storyId);
 
   if(found) {
-    methodType = "post"
-  } else {
     methodType = "delete"
+  } else {
+    methodType = "post"
   }
 
   /*
@@ -138,4 +139,27 @@ async function submitFavorite() {
 
   */
   const favoriteResponse = await User.favoriteStory(currentUser, storyId, methodType);
+  console.log(favoriteResponse);
+
+  if(favoriteResponse.message === "Favorite Removed!") {
+    // Update currentUser.favorites
+    currentUser.favorites = currentUser.favorites.filter(favoriteStory => favoriteStory.storyId !== storyId);
+    // Update DOM
+    evt.target.src = unFavoriteStar;
+  }
+
+
 }
+
+async function deleteStory() {
+
+  const storyId = "12345";
+
+  const found = currentUser.ownStories.find(story => story.storyId === storyId);
+
+  if(found) {
+    const storyResponse = await User.deleteUserStory(currentUser, storyId);
+  }
+}
+
+$allStoriesList.on("click", "img", submitFavorite);
