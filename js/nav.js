@@ -47,7 +47,21 @@ function navFavoritesClick(evt) {
   }
 
   $allStoriesList.show();
+}
 
+function navMyStoriesClick(evt) {
+  console.debug("navMyStoriesClick");
+
+  $allStoriesList.empty();
+
+  // loop through all of our favorite stories and generate HTML for them
+   for (let story of currentUser.ownStories) {
+    const $story = generateOwnStoryMarkup(story);
+    $allStoriesList.append($story);
+  }
+
+  $allStoriesList.show();
 }
 
 $navFavorites.on("click", navFavoritesClick);
+$navStories.on("click", navMyStoriesClick);

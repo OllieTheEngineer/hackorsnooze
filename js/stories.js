@@ -28,7 +28,7 @@ function generateStoryMarkup(story) {
   if(found) { // if favorite story exist
   return $(`
       <li>
-        <img id="${story.storyId}" width="15" height="15" src="${favoriteStar}" >
+        <img id="${story.storyId}" class="fav-story" width="15" height="15" src="${favoriteStar}" >
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -40,7 +40,7 @@ function generateStoryMarkup(story) {
   } else {
     return $(`
     <li>
-      <img id="${story.storyId}" width="15" height="15" src="${unFavoriteStar}" >
+      <img id="${story.storyId}" class="fav-story" width="15" height="15" src="${unFavoriteStar}" >
       <a href="${story.url}" target="a_blank" class="story-link">
         ${story.title}
       </a>
@@ -50,6 +50,23 @@ function generateStoryMarkup(story) {
     </li>
   `);
   }
+}
+
+function generateOwnStoryMarkup(story) {
+
+  const hostName = story.getHostName();
+ 
+  return $(`
+  <li>
+    <img id="${story.storyId}" class="my-story" width="15" height="15" src="${deleteBtn}" >
+    <a href="${story.url}" target="a_blank" class="story-link">
+      ${story.title}
+    </a>
+    <small class="story-hostname">(${hostName})</small>
+    <small class="story-author">by ${story.author}</small>
+    <small class="story-user">posted by ${story.username}</small>
+  </li>
+`);
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
@@ -89,12 +106,16 @@ async function createStory(event) {
     "url": URLInput.value
   };
 
-  let newStory = await storyList.addStory(currentUser, userInputStory);
-  console.log(newStory);
+  let response = await storyList.addStory(currentUser, userInputStory);
 
   // Update story list
-  // Update current ownStories
+  storyList.stories.unshift(new Story(response.story))
 
+  // Update the DOM
+  putStoriesOnPage();
+
+  // Update current ownStories
+  currentUser.ownStories.push(new Story(response.story))
 }
 
 

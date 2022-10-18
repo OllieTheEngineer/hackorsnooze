@@ -146,20 +146,38 @@ async function submitFavorite(evt) {
     currentUser.favorites = currentUser.favorites.filter(favoriteStory => favoriteStory.storyId !== storyId);
     // Update DOM
     evt.target.src = unFavoriteStar;
-  }
+  } else if(favoriteResponse.message === "Favorite Added!") {
+    // Update currentUser.favorites
+    currentUser.favorites = favoriteResponse.user.favorites.map(story => new Story(story));
 
+    // Update DOM
+    evt.target.src = favoriteStar;
+  }
 
 }
 
-async function deleteStory() {
+async function deleteStory(event) {
 
-  const storyId = "12345";
+  const storyId = event.target.id;
 
   const found = currentUser.ownStories.find(story => story.storyId === storyId);
 
   if(found) {
     const storyResponse = await User.deleteUserStory(currentUser, storyId);
+    const storyIdFromAPI = storyResponse.story.storyId;
+
+    // Remove from current user
+    currentUser.ownStories = currentUser.ownStories.filter(story => story.storyId !== storyIdFromAPI);
+    currentUser.favorites = currentUser.favorites.filter(story => story.storyId !== storyIdFromAPI);
+
+    // Story list which is all the stories we see in the dom
+    storyList.stories = storyList.stories.filter(story => story.storyId !== storyIdFromAPI);
   }
+
+  navMyStoriesClick();
 }
 
-$allStoriesList.on("click", "img", submitFavorite);
+$allStoriesList.on("click", ".fav-story", submitFavorite);
+
+// We make own story link unique as user click on my-story class from DOM
+$allStoriesList.on("click", ".my-story", deleteStory);
