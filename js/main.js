@@ -6,7 +6,7 @@ const favoriteStar = "https://toppng.com/uploads/preview/free-png-grey-star-png-
 
 const unFavoriteStar = "https://as2.ftcdn.net/v2/jpg/02/19/11/75/1000_F_219117505_BapGXXD1yqEnfTQz9mhoi4TEohZrijej.jpg";
 
-const deleteBtn = "https://www.vecteezy.com/free-vector/trash-can-icon";
+const deleteBtn = "https://cdn2.vectorstock.com/i/1000x1000/01/71/trash-can-icon-vector-13490171.jpg";
 
 const $body = $("body");
 
